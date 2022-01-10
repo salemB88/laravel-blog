@@ -45,7 +45,7 @@ class RouteServiceProvider extends ServiceProvider
 
             //check if there lang in url and add to url
 if(in_array(request()->segment(1), ['en','ar'])) {
-    Route::middleware('web')->prefix('en', 'ar')
+    Route::middleware('web')->prefix(request()->segment(1))
         ->namespace($this->namespace)
         ->group(base_path('routes/web.php'));
 }

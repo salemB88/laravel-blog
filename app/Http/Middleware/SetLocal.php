@@ -16,8 +16,9 @@ class SetLocal
      */
     public function handle(Request $request, Closure $next)
     {
-
-        app()->setLocale('en');
+if(in_array(request()->segment(1), ['en','ar'])) {
+    app()->setLocale(request()->segment(1));
+}
 
         return $next($request);
     }
