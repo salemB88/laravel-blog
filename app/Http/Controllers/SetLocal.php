@@ -17,7 +17,5 @@ class SetLocal extends Controller
     }
 
 
-    public function route(){
-        return view('pg1');
-    }
+
 }
