@@ -26,7 +26,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string|null
      */
-    // protected $namespace = 'App\\Http\\Controllers';
+     protected $namespace = 'App\\Http\\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -43,11 +43,23 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
+            //check if there lang in url and add to url
+if(in_array(request()->segment(1), ['en','ar'])) {
+    Route::middleware('web')->prefix('en', 'ar')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/web.php'));
+}
+
+
+//if no any lang in url {default} with prefex
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
-    }
+        }
+
+
+
 
     /**
      * Configure the rate limiters for the application.

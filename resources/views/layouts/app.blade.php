@@ -78,6 +78,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="text-center">
+            <a href="/locale/en">English</a>
+            <a href="/locale/ar">Arabic</a>
+        </footer>
     </div>
 </body>
 </html>
