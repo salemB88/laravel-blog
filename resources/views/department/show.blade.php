@@ -11,6 +11,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -19,9 +21,11 @@
 
                 @foreach($departments as $department)
                     <tr>
-                        <th scope="row">{{$count}}</th>
+                        <th scope="row">{{$count++}}</th>
                 <td>{{$department->name}}</td>
                     <td>{{$department->description}}</td>
+                        <td><a>Edit</a></td>
+                        <td><a>Delete</a></td>
                     </tr>
                 @endforeach
 
