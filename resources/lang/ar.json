@@ -1,1 +1,7 @@
-{"test":"اختبار"}
+{"test":"اختبار",
+
+
+"Enter Name Of Department": "ادخل اسم القسم",
+    "Enter Description Of Department": "ادخل وصف القسم",
+    "Submit": "ادخال"
+}
