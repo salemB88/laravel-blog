@@ -17,4 +17,8 @@ protected $fillable=['name','subject','create_by'];
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function departments(){
+        return $this->belongsToMany(department::class,'table_articles_department');
+    }
 }

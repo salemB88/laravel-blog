@@ -10,4 +10,8 @@ class department extends Model
     use HasFactory;
 
     protected $fillable=['name','description'];
+
+    public function articles(){
+        return $this->belongsToMany('table_articles_department');
+    }
 }

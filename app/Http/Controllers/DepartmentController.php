@@ -15,10 +15,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-//return view('department.create');
-        $departments = department::select('name','description')->get();
+return view('department.create');
 
-        return view('department.show',compact('departments'));
     }
 
     /**
@@ -28,7 +26,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-return 'department';
+
     }
 
     /**
@@ -40,6 +38,9 @@ return 'department';
     public function store(StoreDepartment  $request)
     {
 $department = department::create($request->all());
+        $departments = department::select('name','description')->get();
+
+        return view('department.show',compact('departments'));
 
 
     }

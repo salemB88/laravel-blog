@@ -24,3 +24,4 @@ Route::get('locale/{lang}','SetLocal@change_local');
 Route::get('ma','SetLocal@route');
 
 Route::resource('department','DepartmentController');
+Route::resource('article','ArticleController');
