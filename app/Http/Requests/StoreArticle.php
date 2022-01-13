@@ -13,7 +13,7 @@ class StoreArticle extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,29 @@ class StoreArticle extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'required',
+            'subject'=>'required||min:20',
+            'department'=>'required'
+        ];
+    }
+
+    public function messages(){
+        return[
+            'name.required'=>__('Name of Article is required'),
+            'subject.required'=>__('Subject of Article is required'),
+
+        ];
+    }
+    /**
+     *  Filters to be applied to the input.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [
+            'name' => 'trim|lowercase',
+            'description' => 'trim|capitalize|escape'
         ];
     }
 }

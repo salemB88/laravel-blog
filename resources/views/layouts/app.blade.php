@@ -94,6 +94,8 @@
             <a href="/locale/en">English</a>
             <a href="/locale/ar">Arabic</a>
         </footer>
+
+        <a class="btn btn-danger" href="clear-data">Clear Data</a>
     </div>
 </body>
 </html>

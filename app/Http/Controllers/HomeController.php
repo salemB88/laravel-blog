@@ -25,6 +25,10 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    public function clear_data(){
+        session()->flush();
+    return redirect()->back();
+    }
 
 
 }

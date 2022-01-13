@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\article;
+use App\Models\department;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreArticle;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -14,7 +17,12 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+
+        $departments= new department();
+        $departments->all();
+
+
+return view('article.create',compact('departments'));
     }
 
     /**
@@ -33,9 +41,14 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticle $request)
     {
-        //
+        $user= Auth::user();
+      $article=  $user->articles()->create($request->all());
+      $article->departments()->attach($request->department);
+//        $article= article::find($data->id);
+//        $article->departments()->attach($request->department);
+        dd($request->department);
     }
 
     /**
@@ -46,7 +59,7 @@ class ArticleController extends Controller
      */
     public function show(article $article)
     {
-        //
+
     }
 
     /**
@@ -57,7 +70,19 @@ class ArticleController extends Controller
      */
     public function edit(article $article)
     {
-        //
+//   dd($article->subject);
+//   return view('article.edit' , compact('article'));
+        $user= Auth::user();
+        $articles= $user->articles()->find($article->id);
+
+        if($articles){
+            return 'true';
+        } else
+        {
+            return abort(401);
+        }
+
+
     }
 
     /**

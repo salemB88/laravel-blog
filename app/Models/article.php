@@ -12,9 +12,13 @@ class article extends Model
     use SoftDeletes;
 
 
-protected $fillable=['name','subject','create_by'];
+protected $fillable=['name','subject','user_id'];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function departments(){
+        return $this->belongsToMany(department::class,'table_articles_department');
     }
 }
