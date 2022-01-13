@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\article;
 use App\Models\department;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreArticle;
 use Illuminate\Support\Facades\Auth;
+
 
 class ArticleController extends Controller
 {
@@ -18,11 +20,13 @@ class ArticleController extends Controller
     public function index()
     {
 
-        $departments= new department();
-        $departments->all();
+        $user= Auth::user();
+        $userArticle=$user->articles;
 
+//dd($userArticle);
 
-return view('article.create',compact('departments'));
+        return view('article.main',compact('userArticle'));
+
     }
 
     /**
@@ -32,7 +36,11 @@ return view('article.create',compact('departments'));
      */
     public function create()
     {
-        //
+        $departments= new department();
+        $departments->all();
+
+
+return view('article.create',compact('departments'));
     }
 
     /**
@@ -74,11 +82,13 @@ return view('article.create',compact('departments'));
 //   return view('article.edit' , compact('article'));
         $user= Auth::user();
         $articles= $user->articles()->find($article->id);
+        $departments = department::select('id','name','description')->get();
+
 
         if($articles){
-            return 'true';
-        } else
-        {
+            $articlesDepartment=$articles->departments()->pluck('id')->toArray();
+               return view('article.edit' , compact('articles','departments','articlesDepartment'));
+        } else {
             return abort(401);
         }
 
@@ -92,9 +102,21 @@ return view('article.create',compact('departments'));
      * @param  \App\Models\article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, article $article)
+    public function update(StoreArticle $request, article $article)
     {
-        //
+        $user= Auth::user();
+        $articles= $user->articles()->find($article->id);
+
+
+
+        if($articles){
+            $article->update($request->all());
+            $article->departments()->sync($request->department);
+return redirect()->to('/article')->with('process-status',__('Article Edit Successful'));
+        } else {
+            return abort(401);
+        }
+
     }
 
     /**
@@ -105,6 +127,7 @@ return view('article.create',compact('departments'));
      */
     public function destroy(article $article)
     {
-        //
+dd ($article->id);
+
     }
 }
