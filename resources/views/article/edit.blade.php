@@ -35,7 +35,8 @@
 
                 <div class="mb-3">
                     <label class="form-label">{{ __('Enter Subject Article:') }}</label>
-                    <input class="form-control" type="text" name="subject" value="{{$articles->subject}}">
+                    <textarea name="subject">{{$articles->subject}}</textarea>
+{{--                    <input class="form-control" type="text" name="subject" value="{{$articles->subject}}">--}}
                 </div>
 
                 <div class="mb-3">
@@ -58,3 +59,11 @@
     </div>
 
 @endsection
+
+
+@section('script')
+    <script>
+        CKEDITOR.replace( 'subject' );
+    </script
+@endsection
+

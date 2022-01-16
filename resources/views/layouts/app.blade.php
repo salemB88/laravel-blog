@@ -28,6 +28,9 @@
 {{--font awesome--}}
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <!-- Styles -->
+
+
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -98,5 +101,10 @@
 
         <a class="btn btn-danger" href="clear-data">Clear Data</a>
     </div>
+
+    {{--   CKEditor--}}
+
+    <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+    @yield('script')
 </body>
 </html>

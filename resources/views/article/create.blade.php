@@ -16,10 +16,9 @@
                 </div>
             @endif
 
-            <form action="" method="POST">
+            <form action="{{route('article.store')}}" method="POST">
                 @csrf
-
-
+@method('POST')
                 <div class="mb-3">
                     <label class="form-label">{{ __('Enter Article Name:') }} </label>
                     <input class="form-control" type="text" name="name">
@@ -27,7 +26,8 @@
 
                 <div class="mb-3">
                     <label class="form-label">{{ __('Enter Subject Article:') }}</label>
-                    <input class="form-control" type="text" name="subject">
+                    <textarea name="subject"></textarea>
+{{--                    <input class="form-control" type="text" name="subject">--}}
                 </div>
 
                 <div class="mb-3">
@@ -49,3 +49,12 @@
     </div>
 @endsection
 
+
+
+
+
+@section('script')
+    <script>
+        CKEDITOR.replace( 'subject' );
+    </script
+@endsection

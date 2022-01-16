@@ -29,6 +29,6 @@ Route::get('locale/{lang}','SetLocal@change_local');
 Route::resource('department','DepartmentController');
 
 
-Route::resource('article','ArticleController')->middleware('auth');
+Route::resource('article','ArticleController');
 Route::get('clear-data','HomeController@clear_data');
 

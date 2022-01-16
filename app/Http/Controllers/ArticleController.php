@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\article;
 use App\Models\department;
+use Carbon\Carbon;
 use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreArticle;
@@ -17,6 +18,13 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+
+        $this->middleware('auth')->except('show');
+    }
+
     public function index()
     {
 
@@ -56,7 +64,7 @@ return view('article.create',compact('departments'));
       $article->departments()->attach($request->department);
 //        $article= article::find($data->id);
 //        $article->departments()->attach($request->department);
-        dd($request->department);
+return redirect()->to('/article');
     }
 
     /**
@@ -68,6 +76,12 @@ return view('article.create',compact('departments'));
     public function show(article $article)
     {
 
+
+        $todayDate=Carbon::now();
+ $created_before= $article->created_at->diffInDays($todayDate);
+
+
+        return view('article.show',compact('article','created_before'));
     }
 
     /**
@@ -127,7 +141,31 @@ return redirect()->to('/article')->with('process-status',__('Article Edit Succes
      */
     public function destroy(article $article)
     {
-dd ($article->id);
+        $user= Auth::user();
+        $articles= $user->articles()->find($article->id);
 
+
+
+        if($articles){
+
+            // remove department category from pivot table before delete article
+            $article->departments()->detach($article->departments);
+            $article->delete();
+            return redirect()->to('/article');
+
+
+        }else {
+
+return abort(401);
+
+        }
+
+    }
+
+
+    public function calclute_days(){
+        $dateDay=Carbon::now();
+        $today=date_format($dateDay,"Y");
+        return $today;
     }
 }
