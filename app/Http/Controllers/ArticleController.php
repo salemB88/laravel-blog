@@ -28,13 +28,12 @@ class ArticleController extends Controller
     public function index()
     {
 
-        $user= Auth::user();
-        $userArticle=$user->articles;
+        $user = Auth::user();
+        $userArticle = $user->articles;
 
-//dd($userArticle);
+        //dd($userArticle);
 
-        return view('article.main',compact('userArticle'));
-
+        return view('article.main', compact('userArticle'));
     }
 
     /**
@@ -44,11 +43,11 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $departments= new department();
+        $departments = new department();
         $departments->all();
 
 
-return view('article.create',compact('departments'));
+        return view('article.create', compact('departments'));
     }
 
     /**
@@ -59,12 +58,12 @@ return view('article.create',compact('departments'));
      */
     public function store(StoreArticle $request)
     {
-        $user= Auth::user();
-      $article=  $user->articles()->create($request->all());
-      $article->departments()->attach($request->department);
-//        $article= article::find($data->id);
-//        $article->departments()->attach($request->department);
-return redirect()->to('/article');
+        $user = Auth::user();
+        $article =  $user->articles()->create($request->all());
+        $article->departments()->attach($request->department);
+        //        $article= article::find($data->id);
+        //        $article->departments()->attach($request->department);
+        return redirect()->to('/article');
     }
 
     /**
@@ -77,11 +76,10 @@ return redirect()->to('/article');
     {
 
 
-        $todayDate=Carbon::now();
- $created_before= $article->created_at->diffInDays($todayDate);
-
-
-        return view('article.show',compact('article','created_before'));
+        $todayDate = Carbon::now();
+        $created_before = $article->created_at->diffInDays($todayDate);
+        // $article_comments = $article->comments;
+        return view('article.show', compact('article', 'created_before'));
     }
 
     /**
@@ -92,21 +90,19 @@ return redirect()->to('/article');
      */
     public function edit(article $article)
     {
-//   dd($article->subject);
-//   return view('article.edit' , compact('article'));
-        $user= Auth::user();
-        $articles= $user->articles()->find($article->id);
-        $departments = department::select('id','name','description')->get();
+        //   dd($article->subject);
+        //   return view('article.edit' , compact('article'));
+        $user = Auth::user();
+        $articles = $user->articles()->find($article->id);
+        $departments = department::select('id', 'name', 'description')->get();
 
 
-        if($articles){
-            $articlesDepartment=$articles->departments()->pluck('id')->toArray();
-               return view('article.edit' , compact('articles','departments','articlesDepartment'));
+        if ($articles) {
+            $articlesDepartment = $articles->departments()->pluck('id')->toArray();
+            return view('article.edit', compact('articles', 'departments', 'articlesDepartment'));
         } else {
             return abort(401);
         }
-
-
     }
 
     /**
@@ -118,19 +114,18 @@ return redirect()->to('/article');
      */
     public function update(StoreArticle $request, article $article)
     {
-        $user= Auth::user();
-        $articles= $user->articles()->find($article->id);
+        $user = Auth::user();
+        $articles = $user->articles()->find($article->id);
 
 
 
-        if($articles){
+        if ($articles) {
             $article->update($request->all());
             $article->departments()->sync($request->department);
-return redirect()->to('/article')->with('process-status',__('Article Edit Successful'));
+            return redirect()->to('/article')->with('process-status', __('Article Edit Successful'));
         } else {
             return abort(401);
         }
-
     }
 
     /**
@@ -141,31 +136,28 @@ return redirect()->to('/article')->with('process-status',__('Article Edit Succes
      */
     public function destroy(article $article)
     {
-        $user= Auth::user();
-        $articles= $user->articles()->find($article->id);
+        $user = Auth::user();
+        $articles = $user->articles()->find($article->id);
 
 
 
-        if($articles){
+        if ($articles) {
 
             // remove department category from pivot table before delete article
             $article->departments()->detach($article->departments);
             $article->delete();
             return redirect()->to('/article');
+        } else {
 
-
-        }else {
-
-return abort(401);
-
+            return abort(401);
         }
-
     }
 
 
-    public function calclute_days(){
-        $dateDay=Carbon::now();
-        $today=date_format($dateDay,"Y");
+    public function calclute_days()
+    {
+        $dateDay = Carbon::now();
+        $today = date_format($dateDay, "Y");
         return $today;
     }
 }

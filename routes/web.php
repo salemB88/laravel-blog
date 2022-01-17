@@ -30,5 +30,7 @@ Route::resource('department','DepartmentController');
 
 
 Route::resource('article','ArticleController');
+Route::resource('comment','CommentController');
 Route::get('clear-data','HomeController@clear_data');
+Route::post('comment/{article}','CommentController@store')->name('comment.store');
 

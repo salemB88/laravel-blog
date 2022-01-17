@@ -90,7 +90,20 @@
         </nav>
 
         <main class="py-4">
+
+            @if($errors->any())
+                <div class="alert alert-danger" role="alert ">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>    {{$error}} </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @yield('content')
+
+
 
         </main>
 
@@ -99,7 +112,7 @@
             <a href="/locale/ar">Arabic</a>
         </footer>
 
-        <a class="btn btn-danger" href="clear-data">Clear Data</a>
+        <a class="btn btn-danger" href="/clear-data">Clear Data</a>
     </div>
 
     {{--   CKEditor--}}
